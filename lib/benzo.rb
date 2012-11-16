@@ -47,9 +47,17 @@ class Benzo
 
   # given a string, pull out the symbol
   # this is used to get the key for the variable to pass to cocaine.
+  # returns nil if no symbol found
+  # raises an ArgumentError if the symbol isn't well-formed (has bad chars)
   def get_symbol(str)
-    m = str.match /:(\w+)/
-    :"#{m[1]}" if m
+    m = str.match /:(\S+)/
+
+    return nil unless m
+    sym = m[1]
+
+    raise ArgumentError if sym.match(/[^a-z0-9_]/i)
+
+    :"#{sym}"
   end
 
 
