@@ -4,41 +4,46 @@ require 'cocaine'
 
 class Benzo
 
+  attr_accessor :command, :options_map
   attr_accessor :line, :vars
 
-  def self.map(&block)
+  def self.line(command, options_map)
+    b = Benzo.new(command, options_map)
+    line = b.to_cocaine
 
-    b = Benzo.new(&block)
-    b.to_line
+    b = nil
+    line
   end
 
-  def initialize(&block)
-    @line = []
-    @vars = {}
-
-    block.call(self)
-  end
-
-  def option(name=nil, arg)
-    arg.each do |k,v|
+  def map!
+    @options_map.each do |k,v|
+      sym = get_symbol(k)
       @line << k if v
 
-      if v && ! name.nil?
-        @vars[name] = v
+      if sym
+        @vars[sym] = v
       end
     end
   end
 
-  def to_line
-    ::Cocaine::CommandLine.new('pg_dump', @line.join(' '), @vars)
+  def initialize(command, options_map)
+    @command = command
+    @options_map = options_map
+    @line = []
+    @vars = {}
+
+    map!
   end
 
-  def self.build(key,value)
-    if value === true
-      key
-    else
-      key
-    end
+  def get_symbol(str)
+    m = str.match /:(\w+)/
+    :"#{m[1]}" if m
+  end
+
+  def to_cocaine
+    ap @line
+    ap @vars
+    ::Cocaine::CommandLine.new(@command, @line.join(' '), @vars)
   end
 
 end
