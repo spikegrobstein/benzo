@@ -4,9 +4,9 @@ require File.expand_path('../lib/benzo/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Spike Grobstein"]
   gem.email         = ["me@spike.cx"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Take the edge off when doing (command) lines.}
+  gem.summary       = %q{A robust mapper for complex commandline calls using cocaine.}
+  gem.homepage      = "https://github.com/spikegrobstein/benzo"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
