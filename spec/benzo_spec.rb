@@ -43,6 +43,13 @@ describe Benzo do
       benzo.vars.keys.count.should == 0
     end
 
+    it "should append the value to @vars if the key is a symbol" do
+      benzo.options_map = { :logger => 'this_logger' }
+      benzo.send(:map!)
+
+      benzo.vars[:logger].should_not be_nil
+    end
+
   end
 
   context "#get_symbol" do

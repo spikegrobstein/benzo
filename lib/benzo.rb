@@ -36,8 +36,12 @@ class Benzo
   # this object's mapping.
   def map!
     @options_map.each do |k,v|
-      sym = get_symbol(k)
-      @line << k if v
+      sym = if k.is_a? Symbol
+        k
+      else
+        @line << k if v
+        sym = get_symbol(k)
+      end
 
       if sym
         @vars[sym] = v
