@@ -2,7 +2,7 @@
 
 *Take the edge off when doing (command) lines.*
 
-When using [Cocaine](https://github.com/thoughtbot/cocaine), this library will
+Wrapping [Cocaine](https://github.com/thoughtbot/cocaine), this library will
 greatly simplify building complex and conditional commandline arguments.
 
 This is especially useful when creating wrappers for other commandline tools.
