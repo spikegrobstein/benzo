@@ -1,4 +1,4 @@
-# Benzo
+# Benzo  [![Build Status](https://travis-ci.org/spikegrobstein/benzo.png)](https://travis-ci.org/spikegrobstein/benzo)
 
 *Take the edge off when doing (command) lines.*
 
