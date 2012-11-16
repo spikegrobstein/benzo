@@ -1,5 +1,4 @@
 require "benzo/version"
-require 'awesome_print'
 require 'cocaine'
 
 class Benzo
@@ -41,8 +40,6 @@ class Benzo
   end
 
   def to_cocaine
-    ap @line
-    ap @vars
     ::Cocaine::CommandLine.new(@command, @line.join(' '), @vars)
   end
 
