@@ -102,3 +102,16 @@ end
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Acknowledgements
+
+Benzo is written by Spike Grobstein, and wraps [Cocaine](https://github.com/thoughtbot/cocaine) by
+[Thoughtbot](http://www.thoughtbot.com)
+
+## Author
+
+Spike Grobstein  
+me@spike.cx  
+http://spike.grobste.in  
+https://github.com/spikegrobstein
+
