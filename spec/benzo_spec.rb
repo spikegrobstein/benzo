@@ -4,6 +4,16 @@ describe Benzo do
 
   let(:benzo) { Benzo.new 't', {} }
 
+  context ".initialize" do
+
+    it "should interpolate variables into the resulting command" do
+      l = Benzo.line('some_command', '-f :filename' => 'my_file')
+
+      l.command.should match(/my_file/)
+    end
+
+  end
+
   context "#map!" do
 
     it "should append to @line if v evaluates to true" do
