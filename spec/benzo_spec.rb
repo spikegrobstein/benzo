@@ -44,10 +44,10 @@ describe Benzo do
   end
 
   context "#command" do
-    let(:benzo) { Benzo.new 'echo', '-n' => true, 'hello world' => true }
+    let(:benzo) { Benzo.new 'echo', 'hello world' => true }
 
     it "should properly interpolate variables" do
-      benzo.command.should == 'echo -n hello world'
+      benzo.command.should == 'echo hello world'
     end
 
   end
