@@ -4,12 +4,50 @@ describe Benzo do
 
   let(:benzo) { Benzo.new 't', {} }
 
-  context ".initialize" do
+  context "::run!" do
 
-    it "should interpolate variables into the resulting command" do
-      l = Benzo.line('some_command', '-f :filename' => 'my_file')
+    it "should not error out" do
+      lambda { Benzo.run! 'echo', 'hello world' => true }.should_not raise_error
+    end
 
-      l.command.should match(/my_file/)
+    it "should return the correct output" do
+      Benzo.run!('echo', '-n hello world' => true ).should == 'hello world'
+    end
+
+  end
+
+  context "::command!" do
+
+    it "should not error out" do
+      lambda { Benzo.command! 'echo', 'hello world' => true }.should_not raise_error
+    end
+
+    it "should return the correct command" do
+      Benzo.command!('echo', 'hello world' => true).should == 'echo hello world'
+    end
+
+  end
+
+  context "#cocaine" do
+    let(:benzo) { Benzo.new 'echo', '-n' => true, 'hello world' => true }
+
+    it "should return a Cocaine::CommandLine object" do
+      benzo.cocaine.class.should == ::Cocaine::CommandLine
+    end
+
+    it "should return a Cocaine::CommandLine object with the correct things set" do
+      benzo.cocaine.instance_variable_get('@params').should == '-n hello world'
+    end
+
+    it "should return a Cocaine::CommandLine object with the right Cocaine options"
+
+  end
+
+  context "#command" do
+    let(:benzo) { Benzo.new 'echo', '-n' => true, 'hello world' => true }
+
+    it "should properly interpolate variables" do
+      benzo.command.should == 'echo -n hello world'
     end
 
   end

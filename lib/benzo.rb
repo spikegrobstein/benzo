@@ -6,27 +6,45 @@ class Benzo
   attr_accessor :command, :options_map
   attr_accessor :line, :vars
 
-  def initialize(command, options_map)
+  def initialize(command, options_map={})
     @command = command
     @options_map = options_map
     @line = []
     @vars = {}
-
-    map!
   end
 
-  # convenience method for creating a new Benzo object with the given
-  # arguments and returning the Cocaine::Commandline
-  def self.line(command, options_map)
+  # given a +command+ and +options_map+, interpolate the variables and
+  # run the command.
+  # returns the output as a string (as returned from Cocaine)
+  def self.run!(command, options_map)
     b = new(command, options_map)
-    line = b.to_cocaine
-
-    b = nil
-    line
+    r = b.run
+    b = nil # dealocate object
+    r
   end
 
-  # convert this object into a Cocaine::CommandLine
-  def to_cocaine
+  # given a +command+ and +options_map+, interpolate the variables and
+  # return the command that will be run as a string.
+  def self.command!(command, options_map)
+    b = new(command, options_map)
+    c = b.command
+    b = nil # dealocate object
+    c
+  end
+
+  # run the +Cocaine::CommandLine+ command and return the output.
+  def run
+    cocaine.run(@vars)
+  end
+
+  # return the +Cocaine::CommandLine+ command as a string
+  def command
+    cocaine.command(@vars)
+  end
+
+  # map the variables and return a +Cocaine::CommandLine+ object
+  def cocaine
+    map!
     ::Cocaine::CommandLine.new(@command, @line.join(' '), @vars)
   end
 
@@ -35,6 +53,10 @@ class Benzo
   # iterate over the options map and build
   # this object's mapping.
   def map!
+    # re-initialize the state
+    @line = []
+    @vars = {}
+
     @options_map.each do |k,v|
       sym = if k.is_a? Symbol
         k
