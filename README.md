@@ -27,20 +27,20 @@ Given that you want to make a call to `pg_dump`, but depending on some condition
 in your code, you may want to have certain arguments shown or not shown:
 
 ```ruby
-# the state of our app:
-@verbose = true
-@database = 'app_production'
-@file = 'app_prod-dump'
+    # the state of our app:
+    @verbose = true
+    @database = 'app_production'
+    @file = 'app_prod-dump'
 
-# build the Cocaine::Commandline with Benzo
-line = Benzo.line('pg_dump', {
-  '-v' => @verbose,
-  '--schema-only' => @schema_only, # note, @schema_only is nil
-  '-f :filename' => @file,
-  ':db_name' => @database
-})
+    # build the Cocaine::Commandline with Benzo
+    line = Benzo.line('pg_dump', {
+      '-v' => @verbose,
+      '--schema-only' => @schema_only, # note, @schema_only is nil
+      '-f :filename' => @file,
+      ':db_name' => @database
+    })
 
-line.run # execute the command
+    line.run # execute the command
 ```
 
 Benzo takes 2 arguments: `command` and `options_map`. The command is, like in
@@ -94,6 +94,14 @@ rescue Cocaine::ExitStatusError => e
   # => You never get here!
 end
 ```
+
+## Limitations and Gotchas
+
+Benzo 1.0.0 is built against Cocaine 0.3.2. At the time of this release, Cocaine is
+in its 0.4.x release. Because of this, some of the behaviors are out of date.
+
+Benzo 2.0.0 will address this and use a completely different interface for
+interacting with the commandline.
 
 ## Contributing
 
