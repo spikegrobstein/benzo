@@ -14,7 +14,7 @@ This is especially useful when creating wrappers for other commandline tools.
 
 Add this line to your application's Gemfile:
 
-    gem 'benzo'
+    gem 'benzo', '~> 2.0.0'
 
 And then execute:
 
