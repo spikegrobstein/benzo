@@ -55,6 +55,8 @@ omitted from the command.
 
 ## How options_map works
 
+See **Limitations and Gotchas** section below if you're not using Benzo in Ruby 1.9.
+
 `options_map` is a hash that gets processed by `Benzo` to create the
 `Cocaine::CommandLine` object. The hash gets iterated over and any values that
 evaluate to `false` are discarded, then the keys are concatinated together with
@@ -99,6 +101,10 @@ end
 ```
 
 ## Limitations and Gotchas
+
+Because Benzo uses Hash keys to build the commandline string and that order may matter,
+if you're not running Ruby 1.9, you should pass an [OrderedHash](https://rubygems.org/gems/orderedhash)
+for the `options_hash`.
 
 Benzo 1.0.0 is built against Cocaine 0.3.2. At the time of this release, Cocaine is
 in its 0.4.x release. Because of this, some of the behaviors are out of date.
