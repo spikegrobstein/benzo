@@ -36,14 +36,12 @@ in your code, you may want to have certain arguments shown or not shown:
 @file = 'app_prod-dump'
 
 # build the Cocaine::Commandline with Benzo
-line = Benzo.line('pg_dump', {
+Benzo.run!('pg_dump', {
   '-v' => @verbose,
   '--schema-only' => @schema_only, # note, @schema_only is nil
   '-f :filename' => @file,
   ':db_name' => @database
 })
-
-line.run # execute the command
 ```
 
 Benzo takes 2 arguments: `command` and `options_map`. The command is, like in
@@ -52,6 +50,37 @@ the data necessary to build the commandline arguments.
 
 Any value in the hash that evaluates to `false` (this includes `nil`) will be
 omitted from the command.
+
+## A More Complex Example
+
+```ruby
+# the state of our app:
+@verbose = true
+@database = 'app_production'
+@file = 'app_prod-dump'
+
+# build a Benzo object:
+b = Benzo.new('pg_dump',
+  '-v' => @verbose,
+  '--schema-only' => @schema_only, # note, @schema_only is nil
+  '-f :filename' => @file,
+  ':db_name' => @database
+)
+
+b.run # => runs the command: "pg_dump -v -f 'app_prod-dump' 'app_production'"
+
+b.options_map['--schema-only'] = true
+
+b.command # => pg_dump -v --schema-only -f 'app_prod-dump' 'app_production'
+
+c = b.cocaine # => returns a Cocaine::CommandLine object
+
+c.run(:db_name => 'other_db', :filename => 'other_db-dump') # => run it with different options
+```
+
+After creating a Benzo object, you can modify the `options_map` on the fly and
+Benzo will re-map it when calling `#command` or `#run`. There is also a `#cocaine`
+function that will return the `Cocaine::CommandLine` object.
 
 ## How options_map works
 
@@ -105,12 +134,6 @@ end
 Because Benzo uses Hash keys to build the commandline string and that order may matter,
 if you're not running Ruby 1.9, you should pass an [OrderedHash](https://rubygems.org/gems/orderedhash)
 for the `options_hash`.
-
-Benzo 1.0.0 is built against Cocaine 0.3.2. At the time of this release, Cocaine is
-in its 0.4.x release. Because of this, some of the behaviors are out of date.
-
-Benzo 2.0.0 will address this and use a completely different interface for
-interacting with the commandline.
 
 ## Contributing
 
