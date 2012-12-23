@@ -7,6 +7,7 @@ class Benzo
   attr_accessor :line, :vars
 
   def initialize(command, options_map={})
+    Benzo.show_version_warning
     @command = command
     @options_map = options_map
     @line = []
@@ -17,19 +18,25 @@ class Benzo
   # run the command.
   # returns the output as a string (as returned from Cocaine)
   def self.run!(command, options_map)
+    show_version_warning
     b = new(command, options_map)
     r = b.run
+
     b = nil # dealocate object
-    r
+
+    return r
   end
 
   # given a +command+ and +options_map+, interpolate the variables and
   # return the command that will be run as a string.
   def self.command!(command, options_map)
+    show_version_warning
     b = new(command, options_map)
     c = b.command
+
     b = nil # dealocate object
-    c
+
+    return c
   end
 
   # run the +Cocaine::CommandLine+ command and return the output.
@@ -84,6 +91,14 @@ class Benzo
     raise ArgumentError if sym.match(/[^a-z0-9_]/i)
 
     :"#{sym}"
+  end
+
+  # check the current version of ruby
+  # if it's a 1.8.x, then show a warning.
+  def self.show_version_warning
+    if RUBY_VERSION.match /^1\.8/
+      $stderr.puts "WARNING: Benzo 2.0 requires ruby 1.9.x unless you use an OrderedHash for the options map!"
+    end
   end
 
 

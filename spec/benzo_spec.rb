@@ -136,4 +136,10 @@ describe Benzo do
 
   end
 
+  context "when checking the ruby version" do
+
+    it "should print a warning if the ruby version is 1.8"
+
+  end
+
 end
