@@ -2,13 +2,13 @@
 
 *Take the edge off when doing (command) lines.*
 
-**This is the unstable/2.0.0 branch. Docs may be incomplete or completely incorrect.
-This is your warning.**
-
 Wrapping [Cocaine](https://github.com/thoughtbot/cocaine), this library will
 greatly simplify building complex and conditional commandline arguments.
 
 This is especially useful when creating wrappers for other commandline tools.
+
+Benzo 2.x is compatible with the latest version of Cocaine, but due to the way
+that it works, it requires Ruby 1.9.x unless you use the OrderedHash library.
 
 ## Installation
 
