@@ -15,5 +15,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Benzo::VERSION
 
-  gem.add_dependency 'cocaine', "~> 0.4.2"
+  gem.add_dependency 'cocaine', "~> 0.5.8"
 end
